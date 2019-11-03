@@ -37,7 +37,7 @@ namespace MPAL
         [Option('r', "rating", HelpText = "Your rating score for the anime.")]
         public float? Rating { get; set; }
 
-        [Option('p', "progress", HelpText = "Your current episode in the anime.", Default = 0)]
+        [Option('p', "progress", HelpText = "Your current episode in the anime.")]
         public int? Progress { get; set; }
 
         [Option('f', "finished", HelpText = "Whether or not you've finished the anime.", Default = false)]
@@ -65,7 +65,7 @@ namespace MPAL
     [Verb("finish", HelpText = "Remove an anime.")]
     public class FinishOptions
     {
-        [Value(0, MetaName = "name", Required = true, HelpText = "Name of the anime to mark as finished.")]
+        [Value(0, MetaName = "name", Required = true, HelpText = "Name of the anime to .")]
         public string Name { get; set; }
     }
 }

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "MPAL": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "update Test -r 7"
     }
   }
 }
