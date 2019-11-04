@@ -30,31 +30,6 @@ namespace MPAL
                 );
         }
 
-        public static int ViewAnime(ViewOptions opts)
-        {
-            IReadOnlyList<Anime> animes = manager.Animes;
-            if (opts.OrderBy.HasValue)
-            {
-                animes = (opts.OrderBy.Value switch
-                {
-                    Field.Name => opts.Descending ? animes.OrderByDescending(a => a.Name) : animes.OrderBy(a => a.Name),
-                    Field.Rating => opts.Descending ? animes.OrderByDescending(a => a.Rating) : animes.OrderBy(a => a.Rating),
-                    Field.Progress => opts.Descending ? animes.OrderByDescending(a => a.Progress) : animes.OrderBy(a => a.Progress),
-                    Field.Finished => opts.Descending ? animes.OrderByDescending(a => a.Finished) : animes.OrderBy(a => a.Finished),
-                    Field.FinishTime => opts.Descending ? animes.OrderByDescending(a => a.FinishTime) : animes.OrderBy(a => a.FinishTime),
-                }).ToList();
-            }
-            if (opts.Limit.HasValue)
-            {
-                animes = animes.Take(opts.Limit.Value).ToList();
-            }
-            ConsoleTable table = new ConsoleTable("Name", "Rating", "Progress", "Finished", "Finish Time");
-            foreach (Anime anime in animes)
-                table.AddRow(anime.Name, anime.Rating, anime.Progress, anime.Finished, anime.FinishTime);
-            table.Write(Format.Alternative);
-            return 0;
-        }
-
         public static int TryActionAndSave(Action action)
         {
             try
@@ -83,6 +58,31 @@ namespace MPAL
         private static int FinishAnime(string anime) =>
             TryActionAndSave(() => manager.Finish(anime));
 
+        public static int ViewAnime(ViewOptions opts)
+        {
+            IReadOnlyList<Anime> animes = manager.Animes;
+            if (opts.OrderBy.HasValue)
+            {
+                animes = (opts.OrderBy.Value switch
+                {
+                    Field.Name => opts.Descending ? animes.OrderByDescending(a => a.Name) : animes.OrderBy(a => a.Name),
+                    Field.Rating => opts.Descending ? animes.OrderByDescending(a => a.Rating) : animes.OrderBy(a => a.Rating),
+                    Field.Progress => opts.Descending ? animes.OrderByDescending(a => a.Progress) : animes.OrderBy(a => a.Progress),
+                    Field.Finished => opts.Descending ? animes.OrderByDescending(a => a.Finished) : animes.OrderBy(a => a.Finished),
+                    Field.FinishTime => opts.Descending ? animes.OrderByDescending(a => a.FinishTime) : animes.OrderBy(a => a.FinishTime),
+                }).ToList();
+            }
+            if (opts.Limit.HasValue)
+            {
+                animes = animes.Take(opts.Limit.Value).ToList();
+            }
+            ConsoleTable table = new ConsoleTable("Name", "Rating", "Progress", "Finished", "Finish Time");
+            foreach (Anime anime in animes)
+                table.AddRow(anime.Name, anime.Rating, anime.Progress, anime.Finished, anime.FinishTime);
+            table.Write(Format.Alternative);
+            return 0;
+        }
+
         /*
          * TODO:
          * This is more of a statement than an actual todo note.
@@ -105,18 +105,14 @@ namespace MPAL
             for (int index = 1; ; index++)
             {
                 if (opts.Verbose)
-                {
                     Console.WriteLine($"Making request to https://api.jikan.moe/v3/user/{opts.Username}/animelist/all/{index}");
-                }
                 MALResponse response = JsonConvert.DeserializeObject<MALResponse>(client.GetStringAsync($"https://api.jikan.moe/v3/user/{opts.Username}/animelist/all/{index}").Result);
                 if (opts.Verbose)
                     Console.WriteLine($"Adding batch of {response.Animes.Count} animes");
                 foreach (MALAnime anime in response.Animes)
                 {
                     if (opts.Verbose)
-                    {
                         Console.WriteLine($"Adding anime: {anime.Title}");
-                    }
 
                     if (manager.Exists(anime.Title))
                     {
