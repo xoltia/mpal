@@ -12,6 +12,8 @@ namespace MPAL
         private readonly List<Anime> animes;
         private readonly string listPath;
 
+        public IReadOnlyList<Anime> Animes => animes;
+
         public AnimeListManager(string listPath)
         {
             this.listPath = listPath;

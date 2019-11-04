@@ -1,8 +1,7 @@
 {
   "profiles": {
     "MPAL": {
-      "commandName": "Project",
-      "commandLineArgs": "sync HaiiroTama --verbose"
+      "commandName": "Project"
     }
   }
 }
