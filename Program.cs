@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using CommandLine;
+using MPAL.Entities;
 
 namespace MPAL
 {
