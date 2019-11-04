@@ -10,6 +10,8 @@ namespace MPAL
 {
     class Program
     {
+        // TODO: purge and viewing commands
+
         static AnimeListManager manager = new AnimeListManager(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "xoltia/mpal/data.json"));
         static int Main(string[] args)
         {
