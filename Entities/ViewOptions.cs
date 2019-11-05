@@ -11,7 +11,7 @@ namespace MPAL.Entities
         FinishTime,
     }
 
-    [Verb("view")]
+    [Verb("view", HelpText = "View entries in a table format.")]
     public class ViewOptions
     {
         [Option('o', "order-by", HelpText = "Field to order by.")]

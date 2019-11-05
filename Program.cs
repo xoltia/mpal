@@ -79,7 +79,8 @@ namespace MPAL
             ConsoleTable table = new ConsoleTable("Name", "Rating", "Progress", "Finished", "Finish Time");
             foreach (Anime anime in animes)
                 table.AddRow(anime.Name, anime.Rating, anime.Progress, anime.Finished, anime.FinishTime);
-            table.Write(Format.Alternative);
+            // TODO: allow custom setting
+            table.Write(Format.MarkDown);
             return 0;
         }
 
